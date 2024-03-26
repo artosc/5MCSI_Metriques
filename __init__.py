@@ -13,7 +13,7 @@ def hello_world():
 
 @app.route("/contact/")
 def MaPremiereAPI():
-    return "<h2>Ma page de contact</h2>"
+    return render_template("contact.html")
   
 @app.route('/tawarano/')
 def meteo():
@@ -34,6 +34,7 @@ def mongraphique():
 @app.route("/histogram/")
 def monhistogram():
     return render_template("histogram.html")
+
 
 if __name__ == "__main__":
   app.run(debug=True)
