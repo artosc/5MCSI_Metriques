@@ -1,36 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Graphique des commits</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Commits</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
-    <canvas id="commitsChart" width="800" height="400"></canvas>
+    <h1>Informations sur les commits de mon Projet :</h1>
+    <div id="chart_div"></div>
 
     <script>
-        var ctx = document.getElementById('commitsChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: {labels,tojson},
-                datasets: [{
-                    label: 'Nombre de Commits par Minute',
-                    data: { values , tojson },
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var dataTable = new google.visualization.DataTable();
+            dataTable.addColumn('string', 'Date');
+            dataTable.addColumn('number', 'Minute');
+
+            $.getJSON('https://api.github.com/repos/artosc/5MCSI_Metriques/commits', function(data) {
+                data.forEach(function(commit) {
+                    var date = commit.commit.author.date;
+                    $.getJSON('/extract-minutes/' + date, function(minutesData) {
+                        dataTable.addRow([date, minutesData.minutes]);
+                    });
+                });
+
+                var options = {
+                    title: 'Quantité de commits par minute',
+                    curveType: 'function',
+                    legend: { position: 'bottom' },
+                    colors: ['pink'],
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                chart.draw(dataTable, options);
+            });
+        }
     </script>
 </body>
 </html>
