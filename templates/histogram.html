@@ -9,7 +9,7 @@
     <script>
       google.charts.load('current', { packages: ['corechart'] });
       google.charts.setOnLoadCallback(drawBackgroundColor);
-    function drawBackgroundColor() {
+    function drawBackgroundColor(red) {
     function drawChart(data) {
     // Convertir les données récupérées en un tableau utilisable par Google Charts
     var dataTable = new google.visualization.DataTable();
@@ -23,7 +23,7 @@
     // Configurer les options du graphique en ligne
     var options = {
       title: 'Histogram évolution des températures de la ville de Tawarano',
-      legend: { position: 'top' }
+      legend: { position: 'bottom' }
     };
     var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
     chart.draw(dataTable, options);
