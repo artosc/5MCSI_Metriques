@@ -9,7 +9,7 @@
     <script>
       google.charts.load('current', { packages: ['corechart'] });
       google.charts.setOnLoadCallback(drawBackgroundColor);
-    function drawBackgroundColor(red) {
+    function drawBackgroundColor() {
     function drawChart(data) {
     // Convertir les données récupérées en un tableau utilisable par Google Charts
     var dataTable = new google.visualization.DataTable();
@@ -27,6 +27,7 @@
     };
     var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
     chart.draw(dataTable, options);
+    colors: ['#e7711c'];
   }
   // Récupération de données depuis notre API /tawarano/
   fetch('/tawarano/')
