@@ -22,13 +22,13 @@
 
     // Configurer les options du graphique en ligne
     var options = {
-      title: 'Histogram évolution des températures de la ville de Tawarano',
-      legend: { position: 'bottom' }
-    };
+    title: 'Histogram évolution des températures de la ville de Tawarano',
+    legend: { position: 'none' },
+    colors: ['green'],
+  };
     var chart = new google.visualization.Histogram(document.getElementById('chart_div'));
     chart.draw(dataTable, options);
-    colors: ['#e7711c'];
-  }
+}
   // Récupération de données depuis notre API /tawarano/
   fetch('/tawarano/')
     .then(response => response.json())
